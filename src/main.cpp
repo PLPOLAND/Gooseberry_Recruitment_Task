@@ -7,11 +7,16 @@
 #include "VelvetNoiseGenerator.h"
 #include "NoiseToCSVWriter.h"
 
-#define TIME 1.0
-#define SAMPLE_RATE 44100
+// in seconds
+#define TIME 1.0 
+// in Hz
+#define SAMPLE_RATE 44100 
+// for velvet noise generator; how many pulses per second
+#define PULSE_DENSITY 2000 
 
 
-
+///\brief Main function
+///\author Marek Pałdyna
 int main( int argc, char* argv[]) {
     size_t samples = TIME * SAMPLE_RATE;
 
@@ -20,13 +25,13 @@ int main( int argc, char* argv[]) {
     VelvetNoiseGenerator valvetNoiseGenerator;
     pinkNoiseGenerator.generateNoiseData(samples);
     brownNoiseGenerator.generateNoiseData(samples);
-    valvetNoiseGenerator.generateNoiseData(samples, 2000, SAMPLE_RATE);
+    valvetNoiseGenerator.generateNoiseData(samples, PULSE_DENSITY, SAMPLE_RATE);
     
     NoiseToCSVWriter noiseToCSVWriter;
     noiseToCSVWriter.addData("pink", pinkNoiseGenerator.getNoiseData());
     noiseToCSVWriter.addData("brown", brownNoiseGenerator.getNoiseData());
-    noiseToCSVWriter.addData("valvet", valvetNoiseGenerator.getNoiseData());
-    noiseToCSVWriter.writeData("noise.csv");
+    noiseToCSVWriter.addData("velvet", valvetNoiseGenerator.getNoiseData());
+    noiseToCSVWriter.writeData("pink_brown_velvet_noise_data.csv");
 
     return 0;
 }

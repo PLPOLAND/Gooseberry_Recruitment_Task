@@ -8,6 +8,7 @@
 #include <cmath>
 #include "../lib/CSVWriter.h"
 
+///\brief Class for writing noise data to a csv file 
 class NoiseToCSVWriter
 {
 public:
@@ -19,7 +20,7 @@ public:
 
 private:
     std::vector<std::pair<std::string, std::vector<double>*>> data;
-    CSVWriter csvWriter;
+    CSVWriter* csvWriter;
 
 
     void mapData(std::vector<double>* data, double minIn, double maxIn, double outMin, double outMax);

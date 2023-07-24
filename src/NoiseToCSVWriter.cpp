@@ -2,14 +2,17 @@
 
 NoiseToCSVWriter::NoiseToCSVWriter()
 {
-
+    this->csvWriter = new CSVWriter(",");
 }
 
 NoiseToCSVWriter::~NoiseToCSVWriter()
 {
-
+    delete this->csvWriter;
 }
 
+///\brief Adds data to the writer with the given name, and then maps the data to the range of 0-255
+///\param name Name of the row in the csv file
+///\param data Data to be added
 void NoiseToCSVWriter::addData(std::string name,const  std::vector<double> data)
 {
     std::vector<double>* tempData = new std::vector<double>(data);
@@ -17,14 +20,15 @@ void NoiseToCSVWriter::addData(std::string name,const  std::vector<double> data)
     this->data.push_back(std::make_pair(name, tempData));
 }
 
+///\brief Saves the data to the given file
 void NoiseToCSVWriter::writeData(std::string filename)
 {
-    csvWriter.enableAutoNewRow( data.size() );
+    csvWriter->enableAutoNewRow( data.size() );
 
     std::ofstream file;
     file.open(filename);
     for (long unsigned int i = 0; i < data.size(); i++) { // print header
-        csvWriter<<data[i].first;
+        *csvWriter<<data[i].first;
     }
     // csvWriter.newRow();
     size_t max_size = 0; // find max size of data
@@ -38,14 +42,14 @@ void NoiseToCSVWriter::writeData(std::string filename)
         for (long unsigned int i = 0; i < data.size(); i++) {
             if (j >= data[i].second->size())
             {
-                csvWriter<<0;
+                *csvWriter<<0;
             }
             
-            csvWriter<<(int)round(data[i].second->at(j));
+            *csvWriter<<(int)round(data[i].second->at(j));
         }
         // csvWriter.newRow();
     }
-    file << csvWriter;
+    file << *csvWriter;
     file.close();
     
 }

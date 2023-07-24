@@ -4,7 +4,8 @@
 This is a simple color noise generator written in C++. Written as recruitment task.
 
 ## Usage:
-
+You can use this program to generate color noise in 3 different colors: brown, pink and velvet. 
+Generated noise is saved in CSV file. You can specify number of samples, sample rate in main.cpp file.
 ### Compilation:
 ```bash
 make
